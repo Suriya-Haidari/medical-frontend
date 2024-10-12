@@ -134,7 +134,7 @@ export default function Posts() {
 
   const handleDelete = async (id, option) => {
     try {
-      await axios.delete(`https://localhost:3001/api/items/${option}/${id}`);
+      await axios.delete(`https://medical-backend-project.onrender.com/${option}/${id}`);
       dispatch(deleteItem(id));
     } catch (error) {
       console.error("Error deleting item:", error);
