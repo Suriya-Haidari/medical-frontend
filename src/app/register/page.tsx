@@ -136,7 +136,7 @@ const RegisterForm = () => {
       {/* Form section */}
       <form
         onSubmit={handleSubmit}
-        className="w-full max-w-md mx-auto text-black dark:text-gray-200"
+        className="w-full max-w-md mx-auto text-black dark:text-black"
       >
         <h2 className="text-2xl mb-4 text-center dark:text-gray-200">
           Sign <span className="text-teal-500">Up</span>
