@@ -10,8 +10,8 @@ import { useRouter } from "next/navigation";
 import Notif from "../emergency/Notif";
 
 const navigation = [
-  { name: "Dashboard", href: "/", current: true },
-  { name: "New Post ", href: "/new-post", current: false },
+  { name: "Dashboard", href: "/medical-frontend/", current: true },
+  { name: "New Post ", href: "/medical-frontend/new-post", current: false },
 ];
 
 function classNames(...classes) {
@@ -132,7 +132,7 @@ export default function AdminDashboard() {
                       <span className="sr-only">Open user menu</span>
                       <img
                         className="h-8 w-8 rounded-full"
-                        src="/default.jpg"
+                        src="./default.jpg"
                         alt=""
                       />
                       {/* <Image
@@ -146,7 +146,7 @@ export default function AdminDashboard() {
                       <Menu.Item>
                         {({ active }) => (
                           <a
-                            href="/adminPage/profile"
+                            href="/medical-frontend/adminPage/profile"
                             className={classNames(
                               active ? "bg-gray-100" : "",
                               "block px-4 py-2 text-sm text-black"
@@ -159,7 +159,7 @@ export default function AdminDashboard() {
                       <Menu.Item>
                         {({ active }) => (
                           <a
-                            href="/adminPage/UsersControllers"
+                            href="/medical-frontend/adminPage/UsersControllers"
                             className={classNames(
                               active ? "bg-gray-100" : "",
                               "block px-4 py-2 text-sm text-black"
