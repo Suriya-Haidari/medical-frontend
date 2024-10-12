@@ -23,7 +23,7 @@ export default function CreateForm() {
       return;
     }
 
-    // Validate the paragraph length
+    // Paragraph and title validation
     if (paragraph.length < 60 || paragraph.length > 100) {
       setError("Paragraph must be between 60 and 100 characters.");
       return;
@@ -33,13 +33,22 @@ export default function CreateForm() {
       return;
     }
 
-    // Validate the image and file
+    // Image validation: Check if image is uploaded
     if (!image) {
       setError("Please upload an image.");
       return;
     }
+
+    // Image size validation
     if (image.size > 5 * 1024 * 1024) {
       setError("Image must be smaller than 5MB.");
+      return;
+    }
+
+    // Image type validation
+    const allowedTypes = ["image/jpeg", "image/png", "image/jpg"];
+    if (!allowedTypes.includes(image.type)) {
+      setError("Only JPEG, PNG, or GIF images are allowed.");
       return;
     }
 
@@ -91,18 +100,17 @@ export default function CreateForm() {
   };
 
   return (
-    <div className="section">
-      {/* <Notif /> */}
+    <div className="bg-white dark:bg-black">
+      <br />
+      <br />
+      <br />
       <form
         onSubmit={handleSubmit}
         encType="multipart/form-data"
-        className="max-w-md mx-auto p-4 bg-white text-black dark:text-black shadow-md rounded-lg space-y-4"
+        className="max-w-md mx-auto p-4 bg-white dark:bg-neutral-800 text-black dark:text-white text-black shadow-md rounded-lg space-y-4"
       >
         <div>
-          <label
-            htmlFor="title"
-            className="block text-sm font-medium text-black dark:text-black"
-          >
+          <label htmlFor="title" className="block text-sm font-medium">
             Title:
           </label>
           <input
@@ -114,7 +122,7 @@ export default function CreateForm() {
             onFocus={() => setFocusedField("title")}
             onBlur={() => setFocusedField("")}
             required
-            className={`mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none ${
+            className={`mt-1 block w-full px-3 py-2 dark:text-black border border-gray-300 rounded-md shadow-sm focus:outline-none ${
               title.length > 25 ? "border-red-500" : ""
             }`}
           />
@@ -126,10 +134,7 @@ export default function CreateForm() {
         </div>
 
         <div>
-          <label
-            htmlFor="paragraph"
-            className="block text-sm font-medium text-gray-700"
-          >
+          <label htmlFor="paragraph" className="block text-sm font-medium ">
             Paragraph:
           </label>
           <textarea
@@ -140,7 +145,7 @@ export default function CreateForm() {
             onFocus={() => setFocusedField("paragraph")}
             onBlur={() => setFocusedField("")}
             required
-            className={`mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none ${
+            className={`mt-1 block w-full px-3 py-2 dark:text-black border border-gray-300 rounded-md shadow-sm focus:outline-none ${
               paragraph.length < 60 || paragraph.length > 100
                 ? "border-red-500"
                 : ""
@@ -158,10 +163,7 @@ export default function CreateForm() {
         </div>
 
         <div>
-          <label
-            htmlFor="option"
-            className="block text-sm font-medium text-gray-700"
-          >
+          <label htmlFor="option" className="block text-sm font-medium ">
             Section
           </label>
           <select
@@ -170,7 +172,7 @@ export default function CreateForm() {
             value={option}
             onChange={(e) => setOption(e.target.value)}
             required
-            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none"
+            className="mt-1 block dark:text-black w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none"
           >
             <option value="">Select Section:</option>
             <option value="hospital">Hospital</option>
@@ -179,10 +181,7 @@ export default function CreateForm() {
           </select>
         </div>
         <div>
-          <label
-            htmlFor="image"
-            className="block text-sm font-medium text-gray-700"
-          >
+          <label htmlFor="image" className="block text-sm font-medium ">
             Image:
           </label>
           <input
@@ -192,7 +191,7 @@ export default function CreateForm() {
             accept="image/*"
             onChange={(e) => setImage(e.target.files[0])}
             required
-            className="mt-1 block w-full text-sm text-gray-500 file:border file:border-gray-300 file:bg-gray-50 file:px-3 file:py-2 file:text-gray-700 file:rounded-md hover:file:bg-gray-100"
+            className="mt-1 dark:text-black block w-full text-sm text-gray-500 file:border file:border-gray-300 file:bg-gray-50 file:px-3 file:py-2 file: file:rounded-md hover:file:bg-gray-100"
           />
           {image && image.size > 5 * 1024 * 1024 && (
             <p className="text-red-500 text-sm mt-1">
@@ -202,18 +201,16 @@ export default function CreateForm() {
         </div>
 
         <div className="mt-2">
-          <label className="block text-sm font-medium text-gray-700">
-            Image Preview:
-          </label>
+          <label className="block text-sm font-medium ">Image Preview:</label>
           <div className="w-full h-48 border border-gray-300 rounded-md overflow-hidden">
             {image ? (
               <Image
-                src={URL.createObjectURL(image)} // Create a URL for the selected image
-                alt="Preview" // Provide an appropriate alt text
+                src={URL.createObjectURL(image)}
+                alt="Preview"
                 className="object-cover w-full h-full"
-                layout="responsive" // Set the layout as needed
-                width={500} // Set a width that makes sense for your layout
-                height={300} // Set a height that makes sense for your layout
+                layout="responsive"
+                width={500}
+                height={300}
               />
             ) : (
               <img
@@ -221,16 +218,6 @@ export default function CreateForm() {
                 alt="Placeholder"
                 className="object-cover w-full h-full"
               />
-
-              // Replace <img> with <Image />
-              // <Image
-              //   className="h-full w-full object-cover transition-transform duration-500 group-hover:rotate-3 group-hover:scale-125"
-              //   src="placeholder.png"
-              //   alt="Preview"
-              //   layout="responsive"
-              //   width={500} // Specify a width
-              //   height={300} // Specify a height
-              // />
             )}
           </div>
         </div>
@@ -257,6 +244,9 @@ export default function CreateForm() {
           onClose={handleCloseNotification}
         />
       )}
+      <br />
+      <br />
+      <br />
     </div>
   );
 }
