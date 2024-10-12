@@ -11,7 +11,7 @@ const LogoutButton = () => {
     try {
       // Send POST request to log out
       await axios.post(
-        "http://localhost:3001/api/logout",
+        "https://medical-backend-project.onrender.com/api/logout",
         {},
         { withCredentials: true }
       );
