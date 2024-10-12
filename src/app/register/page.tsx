@@ -189,7 +189,7 @@ const RegisterForm = () => {
       <br />
       <div className="flex justify-end w-full max-w-md mb-4 ">
         <div className="mr-4 px-6 py-3 border border-transparent rounded-md shadow-sm text-white bg-teal-500 hover:bg-teal-600">
-          <a className="text-white mr-4" href="/signin">
+          <a className="text-white mr-4" href="/medical-frontend/signin">
             Sign in
           </a>
         </div>
