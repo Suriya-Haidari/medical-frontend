@@ -130,13 +130,13 @@ const RegisterForm = () => {
   }
 
   return (
-    <div className="flex flex-col items-center justify-center w-full section p-6">
+    <div className="flex flex-col items-center justify-center w-full section p-6 dark:text-gray-200 dark:bg-black bg-white text-black">
       <br />
 
       {/* Form section */}
       <form
         onSubmit={handleSubmit}
-        className="w-full max-w-md mx-auto text-black dark:text-black"
+        className="w-full max-w-md mx-auto text-black dark:text-gray-200"
       >
         <h2 className="text-2xl mb-4 text-center dark:text-gray-200">
           Sign <span className="text-teal-500">Up</span>
