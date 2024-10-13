@@ -65,7 +65,7 @@ export default function AdminDashboard() {
   }, []);
 
   return (
-    <div className="min-h-screen w-full bg-gray-100 dark:bg-neutral-900">
+    <div className="min-h-screen manager__page w-full bg-gray-100 dark:bg-neutral-900">
       {/* Navbar */}
       <Disclosure as="nav" className="bg-gray-200 dark:bg-neutral-800 w-full">
         {({ open }) => (
