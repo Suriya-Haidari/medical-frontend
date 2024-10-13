@@ -90,32 +90,6 @@ export default function Posts() {
     fetchPosts();
   }, [dispatch, filter]);
 
-  // // Fetch user role for role-based access control
-  // useEffect(() => {
-  //   const fetchUserRole = async () => {
-  //     try {
-  //       const token = Cookies.get("token");
-  //       if (!token) {
-  //         console.error("No token found.");
-  //         return;
-  //       }
-
-  //       const response = await axios.get(
-  //         "http://localhost:3001/api/user/role",
-  //         {
-  //           headers: { Authorization: `Bearer ${token}` },
-  //         }
-  //       );
-
-  //       setUserRole(response.data.role); // Set the user's role
-  //     } catch (error) {
-  //       console.error("Error fetching user role:", error);
-  //     }
-  //   };
-
-  //   fetchUserRole();
-  // }, []);
-  //
   // Handle navigation based on role
   const handleAdminPanelNavigation = () => {
     router.push("/adminPage");
@@ -134,7 +108,7 @@ export default function Posts() {
 
   const handleDelete = async (id, option) => {
     try {
-      await axios.delete(`https://medical-backend-project.onrender.com/${option}/${id}`);
+      await axios.delete(`https://medical-backend-project.onrender.com/api/items/${option}/${id}`);
       dispatch(deleteItem(id));
     } catch (error) {
       console.error("Error deleting item:", error);
