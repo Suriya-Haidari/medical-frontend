@@ -36,7 +36,7 @@ export default function Posts() {
         }
 
         const response = await axios.get(
-          "http://localhost:3001/api/user/role",
+          "https://medical-backend-project.onrender.com/api/user/role",
           {
             headers: {
               Authorization: `Bearer ${token}`,
