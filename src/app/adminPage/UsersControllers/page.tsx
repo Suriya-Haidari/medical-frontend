@@ -51,10 +51,11 @@ export default function AdminProfile() {
   };
 
   const handleSuggestionClick = (suggestion: string) => {
-    const filtered = users.filter((user) =>
-      user.email.toLowerCase().includes(suggestion.toLowerCase())
+    setFilteredUsers(
+      users.filter((user) =>
+        user.email.toLowerCase().includes(suggestion.toLowerCase())
+      )
     );
-    setFilteredUsers(filtered);
   };
 
   const adminHandleDelete = async (userId) => {
@@ -127,10 +128,10 @@ export default function AdminProfile() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-100  dark:bg-black flex flex-col items-center justify-center overflow-x-hidden">
+    <div className="min-h-screen bg-gray-100 flex flex-col dark:bg-black items-center justify-center overflow-x-hidden">
       <div className="w-full max-w-4xl mx-4 dark:bg-black dark:text-gray-200 bg-white rounded-lg shadow-md p-6">
         <h1 className="text-2xl font-bold mb-4 text-center">Admin Panel</h1>
-        <p className="text-center  mb-4">
+        <p className="text-center mb-4">
           As a manager, you can view all user accounts, promote users to admin,
           and delete accounts as necessary. Use the options below to manage your
           platform users effectively.
@@ -141,7 +142,7 @@ export default function AdminProfile() {
         {/* Search component */}
         <Search
           onSearch={handleSearch}
-          suggestions={users.map((user) => user.email)} // Pass suggestions as user emails
+          suggestions={filteredUsers.map((user) => user.email)} // Pass filtered suggestions
           onSuggestionClick={handleSuggestionClick}
         />
         <br />
@@ -151,7 +152,7 @@ export default function AdminProfile() {
           {filteredUsers.map((user) => (
             <div
               key={user.id}
-              className="border  dark:bg-neutral-800 dark:text-gray-200 rounded-lg p-4 bg-white shadow-md"
+              className="border dark:bg-neutral-800 dark:text-gray-200 rounded-lg p-4 bg-white shadow-md"
             >
               <h3 className="text-gray-800 font-semibold truncate dark:text-gray-200">
                 {user.email}
