@@ -10,7 +10,7 @@ const Notifications = () => {
   const fetchNotifications = async () => {
     try {
       const response = await axios.get(
-        "https://medical-backend-project.onrender.com/api/notifications", // Updated URL
+        "https://medical-backend-project.onrender.com/api/notifications",
         {
           withCredentials: true, // Include cookies with the request
         }
@@ -30,7 +30,7 @@ const Notifications = () => {
   const markAsRead = async (id) => {
     try {
       await axios.patch(
-        `https://medical-backend-project.onrender.com/api/notifications/${id}`, // Updated URL
+        `https://medical-backend-project.onrender.com/api/notifications/${id}`,
         {},
         {
           withCredentials: true, // Include cookies with the request
