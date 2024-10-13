@@ -24,6 +24,7 @@ export default function Posts() {
 
   const router = useRouter();
   const [role, setRole] = useState<string | null>(null); // State for storing the user role
+  const [loading, setLoading] = useState<boolean>(false); // Loading state
 
   useEffect(() => {
     const fetchUserRole = async () => {
@@ -35,7 +36,7 @@ export default function Posts() {
         }
 
         const response = await axios.get(
-          "https://medical-backend-project.onrender.com/api/user/role",
+          "http://localhost:3001/api/user/role",
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -52,9 +53,11 @@ export default function Posts() {
 
     fetchUserRole();
   }, []);
+
   // Fetch posts when component mounts
   useEffect(() => {
     const fetchPosts = async () => {
+      setLoading(true); // Set loading to true when fetching starts
       try {
         const token = Cookies.get("token");
         if (!token) {
@@ -70,7 +73,6 @@ export default function Posts() {
               Authorization: `Bearer ${token}`,
             },
             // @ts-ignore
-
             withCredentials: true,
           }
         );
@@ -80,10 +82,13 @@ export default function Posts() {
         } else if (postsResponse.status === 401) {
           alert("Your session has expired. Please log in again.");
         }
-        // @ts-ignore
+        //@ts-ignore
+        // Fetch and dispatch items to Redux
         dispatch(fetchItems(filter));
       } catch (error) {
         console.error("Error fetching posts:", error);
+      } finally {
+        setLoading(false); // Set loading to false when fetching ends
       }
     };
 
@@ -102,13 +107,16 @@ export default function Posts() {
   const handleCreateNewPost = () => {
     router.push("/new-post");
   };
+
   const handleEdit = (item) => {
     dispatch(setEditItem(item));
   };
 
   const handleDelete = async (id, option) => {
     try {
-      await axios.delete(`https://medical-backend-project.onrender.com/api/items/${option}/${id}`);
+      await axios.delete(
+        `https://medical-backend-project.onrender.com/api/items/${option}/${id}`
+      );
       dispatch(deleteItem(id));
     } catch (error) {
       console.error("Error deleting item:", error);
@@ -123,6 +131,7 @@ export default function Posts() {
   const toggleExpand = (id) => {
     dispatch(setExpandedItemId(expandedItemId === id ? null : id));
   };
+
   return (
     <div className="bg-white dark:bg-neutral-900">
       <div className="ml-10 sm:ml-0 mt-10 sm:mt-0">
@@ -163,21 +172,27 @@ export default function Posts() {
           <EditForm />
         ) : (
           <div>
-            {filteredItems.length > 0 ? (
-              <div className="flex flex-wrap justify-center p-4 gap-4">
-                {filteredItems.map((item) => (
-                  <ItemCard
-                    key={item.id}
-                    item={item}
-                    handleEdit={handleEdit}
-                    handleDelete={() => handleDelete(item.id, item.option)}
-                    isExpanded={expandedItemId === item.id}
-                    toggleExpand={() => toggleExpand(item.id)}
-                  />
-                ))}
-              </div>
+            {loading ? (
+              <p className="text-center text-lg">
+                Please wait, the posts are fetching...
+              </p>
             ) : (
-              <p className="text-center text-lg">No posts available yet!</p>
+              <div>
+                {filteredItems.length > 0 ? (
+                  <div className="flex flex-wrap justify-center p-4 gap-4">
+                    {filteredItems.map((item) => (
+                      <ItemCard
+                        key={item.id}
+                        item={item}
+                        handleEdit={handleEdit}
+                        handleDelete={() => handleDelete(item.id, item.option)}
+                        isExpanded={expandedItemId === item.id}
+                        toggleExpand={() => toggleExpand(item.id)}
+                      />
+                    ))}
+                  </div>
+                ) : null}{" "}
+              </div>
             )}
           </div>
         )}
