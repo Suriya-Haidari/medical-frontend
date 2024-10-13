@@ -81,9 +81,6 @@
 
 // export default Notifications;
 
-
-
-
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import CreatingNewNotification from "./CreatingNewNotification";
@@ -127,9 +124,11 @@ const Notifications = () => {
   const markAsRead = async (id) => {
     try {
       // Retrieve the JWT token from cookies
-      const cookies = new Cookies();
-      const token = cookies.get("token"); // Make sure the cookie name matches what you're using in the server
-
+      const token = Cookies.get("token");
+      if (!token) {
+        console.error("No token found in cookies.");
+        return;
+      }
       await axios.patch(
         `https://medical-backend-project.onrender.com/api/notifications/${id}`,
         {},
