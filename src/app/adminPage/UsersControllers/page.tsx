@@ -127,7 +127,7 @@ export default function AdminProfile() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-100 flex flex-col items-center justify-center overflow-x-hidden">
+    <div className="min-h-screen bg-gray-100  dark:bg-black flex flex-col items-center justify-center overflow-x-hidden">
       <div className="w-full max-w-4xl mx-4 dark:bg-black dark:text-gray-200 bg-white rounded-lg shadow-md p-6">
         <h1 className="text-2xl font-bold mb-4 text-center">Admin Panel</h1>
         <p className="text-center  mb-4">
