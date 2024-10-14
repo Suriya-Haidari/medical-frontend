@@ -3,16 +3,7 @@
 import { useState, useEffect } from "react";
 import { Metadata } from "next";
 import Home from "./home/page";
-import Notification from "./components/notification"; // Adjust path if needed
-
-// export const metadata: Metadata = {
-//   title: {
-//     default: "Medical Website",
-//     template: "%s | Medical Website",
-//   },
-//   description:
-//     "Welcome to the Medical website. Here you can find all the data about the Habibiyar hospital.",
-// };
+import Notification from "./components/notification";
 
 export default function Root() {
   const [showNotification, setShowNotification] = useState(true); // Track notification visibility
