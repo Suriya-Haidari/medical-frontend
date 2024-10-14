@@ -49,56 +49,6 @@ const RegisterForm = () => {
     checkAuthStatus();
   }, [dispatch, router]);
 
-  // useEffect(() => {
-  //   const checkAuthStatus = async () => {
-  //     try {
-  //       const response = await axios.get(
-  //         "https://localhost:3001/api/auth/status", // Use the deployed backend link
-  //         {
-  //           withCredentials: true, // Ensure cookies are sent with the request
-  //         }
-  //       );
-
-  //       if (response.data.isAuthenticated) {
-  //         dispatch(setAuthenticated(true));
-  //         router.push("/emergency"); // Redirect to a different page if authenticated
-  //       } else {
-  //         dispatch(setAuthenticated(false));
-  //       }
-  //     } catch (error) {
-  //       console.error("Failed to check authentication status", error);
-  //       dispatch(setAuthenticated(false));
-  //     } finally {
-  //       setIsLoading(false);
-  //     }
-  //   };
-
-  //   checkAuthStatus();
-  // }, [dispatch, router]);
-
-  // const handleSubmit = async (event) => {
-  //   event.preventDefault();
-  //   try {
-  //     const response = await axios.post(
-  //       "http://localhost:3001/api/register", // Change from https to http for local dev
-  //       { fullName, email, password },
-  //       { withCredentials: true }
-  //     );
-
-  //     if (response.status === 201) {
-  //       Cookies.set("token", response.data.token, {
-  //         expires: 1,
-  //         path: "/",
-  //         sameSite: "Lax",
-  //       }); // Set token with an expiration of 1 day
-  //     }
-  //     dispatch(setAuthenticated(true));
-  //     router.push("/emergency");
-  //   } catch (error) {
-  //     setError("Failed to register. Please try again.");
-  //   }
-  // };
-
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
