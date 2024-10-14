@@ -7,23 +7,23 @@ const Footer = () => {
     {
       title: "Website Contents",
       links: [
-        { text: "Home", url: "/home" },
-        { text: "About", url: "/about" },
-        { text: "Department", url: "/department" },
+        { text: "Home", url: "/medical-frontend/home" },
+        { text: "About", url: "/medical-frontend/about" },
+        { text: "Department", url: "/medical-frontend/department" },
       ],
     },
     {
       title: "Resources",
       links: [
-        { text: "F&Q", url: "/faq" },
-        { text: "Contact Us", url: "contactUs" },
+        { text: "F&Q", url: "/medical-frontend/faq" },
+        { text: "Contact Us", url: "/medical-frontend/services/contactUs" },
       ],
     },
     {
       title: "Services",
       links: [
-        { text: "Our Services", url: "/services" },
-        { text: "Emergency", url: "/emergency" },
+        { text: "Our Services", url: "/medical-frontend/services" },
+        { text: "Emergency", url: "/medical-frontend/emergency" },
       ],
     },
   ];
