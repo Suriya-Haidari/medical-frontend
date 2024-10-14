@@ -13,7 +13,7 @@ const Btn: React.FC<BtnProps> = ({ text }) => {
 
           style={{ "--clr": "#000" }}
           className="btn-3 bg-teal-500 dark:bg-white dark:text-black"
-          href="#"
+          href="/medical-frontend/contactUs"
         >
           <span className="button__icon-wrapper">
             <svg
