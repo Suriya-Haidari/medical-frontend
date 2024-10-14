@@ -31,30 +31,6 @@ export const carouselItems = [
     description:
       "Providing high-quality maternity care, from prenatal checkups to postnatal support for new mothers.",
   },
-  // {
-  //   imgSrc: "/bb.jpg",
-  //   author: "Dr. Michael Johnson",
-  //   title: "Emergency Services",
-  //   topic: "Critical Care",
-  //   description:
-  //     "Round-the-clock emergency services, providing immediate care for urgent and life-threatening conditions.",
-  // },
-  // {
-  //   imgSrc: "/bb.jpg",
-  //   author: "Dr. Sarah Green",
-  //   title: "Surgical Excellence",
-  //   topic: "Surgeries",
-  //   description:
-  //     "State-of-the-art surgical services with a focus on minimally invasive techniques for faster recovery.",
-  // },
-  // {
-  //   imgSrc: "/bb.jpg",
-  //   author: "Dr. David Blue",
-  //   title: "Rehabilitation Center",
-  //   topic: "Physical Therapy",
-  //   description:
-  //     "Comprehensive rehabilitation and physical therapy services to support recovery and well-being.",
-  // },
 ];
 
 export const thumbnails = [
@@ -76,24 +52,6 @@ export const thumbnails = [
     description:
       "Providing support throughout pregnancy and beyond for new mothers and babies.",
   },
-  // {
-  //   imgSrc: "/bb.jpg",
-  //   title: "Emergency Services",
-  //   description:
-  //     "24/7 emergency care for immediate and life-saving interventions.",
-  // },
-  // {
-  //   imgSrc: "/bb.jpg",
-  //   title: "Surgical Excellence",
-  //   description:
-  //     "Minimally invasive surgeries to ensure quick recovery and high-quality care.",
-  // },
-  // {
-  //   imgSrc: "/bb.jpg",
-  //   title: "Rehabilitation",
-  //   description:
-  //     "Physical therapy and rehabilitation services to help patients regain strength.",
-  // },
 ];
 
 export const doctorsData = [
