@@ -90,13 +90,13 @@ const ContactForm: React.FC = () => {
     }
   };
 
-  return (
+   return (
     <div className="article__container">
       <AuthRoute>
-        <article className="article text-black article w-full h-full flex flex-col md:flex-row justify-center items-center bg-cover bg-center bg-fixed ">
+        <article className="article text-gray-200 article w-full h-full flex flex-col md:flex-row justify-center items-center bg-cover bg-center bg-fixed ">
           <section className="relative md:w-5/12 max-w-xl bg-transparent border-2 border-white/50 rounded-3xl backdrop-blur-lg flex justify-center items-center px-20 py-10 mt-4 md:mt-0">
             <form className="w-full" onSubmit={handleSubmit}>
-              <h1 className="text-2xl text-black/60 text-center mb-6">
+              <h1 className="text-2xl text-gray-200 text-center mb-6">
                 Send Feedback
               </h1>
               <div className="relative mb-8 max-w-[310px] border-b-2 border-black/40 mx-auto">
@@ -107,9 +107,9 @@ const ContactForm: React.FC = () => {
                   onChange={handleInputChange}
                   required
                   autoComplete="off"
-                  className="w-full h-14 bg-transparent border-none outline-none text-base pl-2 text-black/60 peer"
+                  className="w-full h-14 bg-transparent border-none outline-none text-base pl-2 text-gray-200 peer"
                 />
-                <label className="absolute top-1/2 left-2 transform -translate-y-1/2 text-black/60 text-base pointer-events-none transition-all duration-300 peer-focus:-top-2 peer-valid:-top-2">
+                <label className="absolute top-1/2 left-2 transform -translate-y-1/2 text-gray-200 text-base pointer-events-none transition-all duration-300 peer-focus:-top-2 peer-valid:-top-2">
                   Your Name
                 </label>
               </div>
@@ -122,9 +122,9 @@ const ContactForm: React.FC = () => {
                   onChange={handleInputChange}
                   required
                   autoComplete="off"
-                  className="w-full h-14 bg-transparent border-none outline-none text-base pl-2 text-black/60 peer"
+                  className="w-full h-14 bg-transparent border-none outline-none text-base pl-2 text-gray-200 peer"
                 />
-                <label className="absolute top-1/2 left-2 transform -translate-y-1/2 text-black/60 text-base pointer-events-none transition-all duration-300 peer-focus:-top-2 peer-valid:-top-2">
+                <label className="absolute top-1/2 left-2 transform -translate-y-1/2 text-gray-200 text-base pointer-events-none transition-all duration-300 peer-focus:-top-2 peer-valid:-top-2">
                   Your Email
                 </label>
               </div>
@@ -137,9 +137,9 @@ const ContactForm: React.FC = () => {
                   value={message}
                   onChange={handleInputChange}
                   required
-                  className="w-full h-auto bg-transparent border-none outline-none text-base pl-2 pt-4 text-black/60 peer"
+                  className="w-full h-auto bg-transparent border-none outline-none text-base pl-2 pt-4 text-gray-200 peer"
                 />
-                <label className="absolute top-1/2 left-2 transform -translate-y-1/2 text-black/60 text-base pointer-events-none transition-all duration-300 peer-focus:-top-2 peer-valid:-top-2">
+                <label className="absolute top-1/2 left-2 transform -translate-y-1/2 text-gray-200 text-base pointer-events-none transition-all duration-300 peer-focus:-top-2 peer-valid:-top-2">
                   Your Message
                 </label>
               </div>
