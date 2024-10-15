@@ -154,7 +154,7 @@ const DisplayEmails: React.FC<DisplayEmailsProps> = ({
         {notifications.map((notification) => (
           <li
             key={notification.id}
-            className="flex justify-between items-center p-2 hover:bg-gray-100 transition-colors duration-200"
+            className="flex justify-between items-center p-2 hover:text-black hover:bg-gray-100 transition-colors duration-200"
           >
             <span>{notification.message}</span>
             <div className="flex items-center">
