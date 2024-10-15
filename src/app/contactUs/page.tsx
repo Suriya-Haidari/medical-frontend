@@ -13,7 +13,9 @@ const ContactForm: React.FC = () => {
 
   useEffect(() => {
     // WebSocket to listen for real-time notifications
-    const newClient = new WebSocket("https://medical-backend-project.onrender.com");
+    // const newClient = new WebSocket("https://medical-backend-project.onrender.com");
+      const client = new WebSocket("wss://medical-backend-project.onrender.com");
+
 
     newClient.onopen = () => {
       console.log("WebSocket Client Connected");
