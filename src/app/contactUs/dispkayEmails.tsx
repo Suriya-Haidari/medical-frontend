@@ -32,7 +32,7 @@ const DisplayEmails: React.FC<DisplayEmailsProps> = ({
 
     try {
       const response = await fetch(
-        `http://localhost:3001/api/formNotifications/${notificationId}`,
+        `https://medical-backend-project.onrender.com/api/formNotifications/${notificationId}`,
         {
           method: "DELETE",
           headers: {
@@ -60,7 +60,7 @@ const DisplayEmails: React.FC<DisplayEmailsProps> = ({
           console.error("No token found in cookies.");
           return;
         }
-        const response = await fetch("http://localhost:3001/api/user/role", {
+        const response = await fetch("https://medical-backend-project.onrender.com/api/user/role", {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -85,7 +85,7 @@ const DisplayEmails: React.FC<DisplayEmailsProps> = ({
   }, []);
 
   useEffect(() => {
-    const client = new WebSocket("ws://localhost:3002");
+    const client = new WebSocket("https://medical-backend-project.onrender.com");
 
     client.onopen = () => {
       console.log("WebSocket Client Connected");
@@ -109,7 +109,7 @@ const DisplayEmails: React.FC<DisplayEmailsProps> = ({
     const fetchNotifications = async () => {
       try {
         const response = await fetch(
-          "http://localhost:3001/api/formNotifications"
+          "https://medical-backend-project.onrender.com/api/formNotifications"
         );
         if (!response.ok) {
           throw new Error("Failed to fetch notifications");
