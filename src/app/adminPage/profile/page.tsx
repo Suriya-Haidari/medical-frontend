@@ -91,7 +91,7 @@ export default function UserProfile() {
         alert("User deleted successfully.");
         setUsers(users.filter((user) => user.id !== userId));
         Cookies.remove("token");
-        window.location.href = "/signin";
+        window.location.href = "/medical-frontend/signin";
       }
     } catch (error) {
       console.error("Error deleting user:", error);
