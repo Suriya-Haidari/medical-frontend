@@ -251,7 +251,7 @@ const DisplayEmails: React.FC<DisplayEmailsProps> = ({
   }, []);
 
   useEffect(() => {
-    const client = new WebSocket("ws://medical-backend-project.onrender.com");
+    const client = new WebSocket("wss://medical-backend-project.onrender.com");
 
     client.onopen = () => {
       console.log("WebSocket Client Connected");
