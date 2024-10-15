@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from "react";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import Cookies from "js-cookie";
@@ -31,7 +32,7 @@ const DisplayEmails: React.FC<DisplayEmailsProps> = ({
 
     try {
       const response = await fetch(
-        `https://medical-backend-project.onrender.com/api/formNotifications/${notificationId}`,
+        `http://localhost:3001/api/formNotifications/${notificationId}`,
         {
           method: "DELETE",
           headers: {
@@ -59,16 +60,13 @@ const DisplayEmails: React.FC<DisplayEmailsProps> = ({
           console.error("No token found in cookies.");
           return;
         }
-        const response = await fetch(
-          "https://medical-backend-project.onrender.com/api/user/role",
-          {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
+        const response = await fetch("http://localhost:3001/api/user/role", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        });
 
         if (!response.ok) {
           throw new Error("Failed to fetch user data");
@@ -87,9 +85,7 @@ const DisplayEmails: React.FC<DisplayEmailsProps> = ({
   }, []);
 
   useEffect(() => {
-    const client = new WebSocket(
-      "https://medical-backend-project.onrender.com"
-    );
+    const client = new WebSocket("ws://localhost:3002");
 
     client.onopen = () => {
       console.log("WebSocket Client Connected");
@@ -113,7 +109,7 @@ const DisplayEmails: React.FC<DisplayEmailsProps> = ({
     const fetchNotifications = async () => {
       try {
         const response = await fetch(
-          "https://medical-backend-project.onrender.com/api/formNotifications"
+          "http://localhost:3001/api/formNotifications"
         );
         if (!response.ok) {
           throw new Error("Failed to fetch notifications");
