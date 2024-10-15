@@ -13,7 +13,7 @@ const ContactForm: React.FC = () => {
 
   useEffect(() => {
     // WebSocket to listen for real-time notifications
-    const newClient = new WebSocket("ws://localhost:3002");
+    const newClient = new WebSocket("https://medical-backend-project.onrender.com");
 
     newClient.onopen = () => {
       console.log("WebSocket Client Connected");
@@ -60,7 +60,7 @@ const ContactForm: React.FC = () => {
 
     try {
       const response = await fetch(
-        "http://localhost:3001/api/formNotifications",
+        "https://medical-backend-project.onrender.com/api/formNotifications",
         {
           method: "POST",
           headers: {
