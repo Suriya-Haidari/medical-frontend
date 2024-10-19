@@ -45,12 +45,6 @@ export default function CreateForm() {
       return;
     }
 
-    // // Image type validation
-    // const allowedTypes = ["image/jpeg", "image/png", "image/jpg"];
-    // if (!allowedTypes.includes(image.type)) {
-    //   setError("Only JPEG, PNG, or GIF images are allowed.");
-    //   return;
-    // }
 
     setError(""); // Clear any previous error
 
@@ -194,7 +188,7 @@ export default function CreateForm() {
               const allowedTypes = ["image/png"];
 
               if (file && !allowedTypes.includes(file.type)) {
-                setError("Only JPEG, PNG, or GIF images are allowed.");
+                setError("Only PNG images are allowed.");
                 setImage(null); // Reset image if validation fails
               } else {
                 setError(""); // Clear error if valid
