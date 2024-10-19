@@ -97,7 +97,7 @@ const ContactForm: React.FC = () => {
           <section className="relative md:w-5/12 max-w-xl bg-transparent border-2 border-white/50 rounded-3xl backdrop-blur-lg flex justify-center items-center px-20 py-10 mt-4 md:mt-0">
             <form className="w-full" onSubmit={handleSubmit}>
               <h1 className="text-2xl text-gray-200 text-center mb-6">
-                Send Feedback
+                Take an appointment!
               </h1>
               <div className="relative mb-8 max-w-[310px] border-b-2 border-black/40 mx-auto">
                 <input
