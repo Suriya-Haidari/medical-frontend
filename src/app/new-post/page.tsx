@@ -1,11 +1,11 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useRef } from "react"; // Import useRef
 import axios from "axios";
 import Notification from "../components/notification";
-// import Notif from "../emergency/Notif";
 import Cookies from "js-cookie";
 import Image from "next/image";
+import { useRouter } from "next/navigation"; // Import useRouter
 
 export default function CreateForm() {
   const [title, setTitle] = useState("");
@@ -15,6 +15,11 @@ export default function CreateForm() {
   const [notification, setNotification] = useState(null);
   const [error, setError] = useState("");
   const [focusedField, setFocusedField] = useState("");
+
+  // Create a ref for the file input
+  const fileInputRef = useRef(null);
+  const router = useRouter(); // Get the router instance
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const token = Cookies.get("token");
@@ -45,7 +50,6 @@ export default function CreateForm() {
       return;
     }
 
-
     setError(""); // Clear any previous error
 
     const formData = new FormData();
@@ -75,6 +79,10 @@ export default function CreateForm() {
         setParagraph("");
         setOption("");
         setImage(null);
+        fileInputRef.current.value = ""; // Reset the file input
+
+        // Redirect to the emergency page
+        router.push("/emergency");
       } else {
         setNotification({
           message: `Upload failed with status ${res.status}`,
@@ -174,6 +182,7 @@ export default function CreateForm() {
             <option value="sick">Sick People News</option>
           </select>
         </div>
+
         <div>
           <label htmlFor="image" className="block text-sm font-medium ">
             Image:
@@ -183,12 +192,13 @@ export default function CreateForm() {
             type="file"
             name="image"
             accept="image/png"
+            ref={fileInputRef} // Attach the ref here
             onChange={(e) => {
               const file = e.target.files[0];
               const allowedTypes = ["image/png"];
 
               if (file && !allowedTypes.includes(file.type)) {
-                setError("Only PNG images are allowed.");
+                setError("Only JPEG, PNG, or GIF images are allowed.");
                 setImage(null); // Reset image if validation fails
               } else {
                 setError(""); // Clear error if valid
@@ -227,17 +237,26 @@ export default function CreateForm() {
             )}
           </div>
         </div>
-
         <button
           type="submit"
           disabled={
-            paragraph.length < 60 || paragraph.length > 100 || title.length > 25
+            paragraph.length < 60 ||
+            paragraph.length > 100 ||
+            title.length > 25 ||
+            !image ||
+            image.size > 5 * 1024 * 1024 ||
+            !!error // Ensure error is a boolean
           }
-          className={`w-full px-4 py-2 ${
-            paragraph.length < 60 || paragraph.length > 100 || title.length > 25
+          className={`w-full px-4 py-2 text-white font-semibold rounded-md shadow-sm ${
+            paragraph.length < 60 ||
+            paragraph.length > 100 ||
+            title.length > 25 ||
+            !image ||
+            image.size > 5 * 1024 * 1024 ||
+            !!error
               ? "bg-gray-400 cursor-not-allowed"
               : "bg-blue-500 hover:bg-blue-600"
-          } text-white font-semibold rounded-md shadow-sm`}
+          }`}
         >
           Upload
         </button>
@@ -250,7 +269,6 @@ export default function CreateForm() {
           onClose={handleCloseNotification}
         />
       )}
-      <br />
       <br />
       <br />
     </div>
