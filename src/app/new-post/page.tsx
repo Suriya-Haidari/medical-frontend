@@ -45,12 +45,12 @@ export default function CreateForm() {
       return;
     }
 
-    // Image type validation
-    const allowedTypes = ["image/jpeg", "image/png", "image/jpg"];
-    if (!allowedTypes.includes(image.type)) {
-      setError("Only JPEG, PNG, or GIF images are allowed.");
-      return;
-    }
+    // // Image type validation
+    // const allowedTypes = ["image/jpeg", "image/png", "image/jpg"];
+    // if (!allowedTypes.includes(image.type)) {
+    //   setError("Only JPEG, PNG, or GIF images are allowed.");
+    //   return;
+    // }
 
     setError(""); // Clear any previous error
 
@@ -188,11 +188,23 @@ export default function CreateForm() {
             id="image"
             type="file"
             name="image"
-            accept="image/*"
-            onChange={(e) => setImage(e.target.files[0])}
+            accept="image/png"
+            onChange={(e) => {
+              const file = e.target.files[0];
+              const allowedTypes = ["image/png"];
+
+              if (file && !allowedTypes.includes(file.type)) {
+                setError("Only JPEG, PNG, or GIF images are allowed.");
+                setImage(null); // Reset image if validation fails
+              } else {
+                setError(""); // Clear error if valid
+                setImage(file);
+              }
+            }}
             required
-            className="mt-1 dark:text-black block w-full text-sm text-gray-500 file:border file:border-gray-300 file:bg-gray-50 file:px-3 file:py-2 file: file:rounded-md hover:file:bg-gray-100"
+            className="mt-1 dark:text-black block w-full text-sm text-gray-500 file:border file:border-gray-300 file:bg-gray-50 file:px-3 file:py-2 file:rounded-md hover:file:bg-gray-100"
           />
+
           {image && image.size > 5 * 1024 * 1024 && (
             <p className="text-red-500 text-sm mt-1">
               Image must be smaller than 5MB.
