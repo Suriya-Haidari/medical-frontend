@@ -2,6 +2,8 @@
 import React, { useState, useEffect } from "react";
 import DisplayEmails from "./dispkayEmails"; // Corrected import statement
 import AuthRoute from "../auth/auth";
+import axios from "axios";
+
 
 const ContactForm: React.FC = () => {
   const [fullName, setFullName] = useState("");
@@ -60,23 +62,23 @@ const ContactForm: React.FC = () => {
       );
     }
 
-    try {
-      const response = await fetch(
+   try {
+      const response = await axios.post(
         "https://medical-backend-project.onrender.com/api/formNotifications",
         {
-          method: "POST",
+          fullName,
+          email,
+          message,
+        },
+        {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({
-            fullName,
-            email,
-            message,
-          }),
         }
       );
 
-      if (!response.ok) {
+      // Check if the response is successful
+      if (response.status !== 200) {
         throw new Error("Error sending notification");
       }
 
