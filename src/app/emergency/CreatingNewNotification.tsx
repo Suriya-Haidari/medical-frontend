@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import axios from "axios";
 import Cookies from "js-cookie";
 
 const CreateNotificationForm = ({ setNotifications }) => {
@@ -15,28 +16,23 @@ const CreateNotificationForm = ({ setNotifications }) => {
         throw new Error("No token found.");
       }
 
-      const response = await fetch(
+      const response = await axios.post(
         "https://medical-backend-project.onrender.com/api/notifications",
+        { message },
         {
-          method: "POST",
           headers: {
             Authorization: `Bearer ${token}`,
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ message }),
         }
       );
 
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || "Failed to create notification.");
-      }
-
-      const newNotification = await response.json();
-      setNotifications((prev) => [newNotification, ...prev]);
+      setNotifications((prev) => [response.data, ...prev]);
       setMessage("");
     } catch (error) {
-      setError(error.message);
+      setError(
+        error.response?.data?.message || "Failed to create notification."
+      );
     }
   };
 
