@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import Cookies from "js-cookie";
+import axios from "axios"; // Import Axios
 
 interface Notification {
   id: number;
@@ -9,7 +10,7 @@ interface Notification {
 }
 
 interface DisplayEmailsProps {
-  notifications: Notification[];
+  notifications: Notification[]; // Define a specific type
   setError: React.Dispatch<React.SetStateAction<string>>;
 }
 
@@ -17,10 +18,11 @@ const DisplayEmails: React.FC<DisplayEmailsProps> = ({
   notifications: initialNotifications,
   setError,
 }) => {
-  const [notifications, setNotifications] = useState<Notification[]>(initialNotifications);
+  const [notifications, setNotifications] =
+    useState<Notification[]>(initialNotifications);
   const [role, setRole] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
-  const [error, setErrorState] = useState<string | null>(null);
+  const [error, setErrorState] = useState<string | null>(null); // Avoid shadowing setError
 
   const handleDelete = async (notificationId: number) => {
     const token = Cookies.get("token");
@@ -30,10 +32,9 @@ const DisplayEmails: React.FC<DisplayEmailsProps> = ({
     }
 
     try {
-      const response = await fetch(
+      const response = await axios.delete(
         `https://medical-backend-project.onrender.com/api/formNotifications/${notificationId}`,
         {
-          method: "DELETE",
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
@@ -41,11 +42,11 @@ const DisplayEmails: React.FC<DisplayEmailsProps> = ({
         }
       );
 
-      if (!response.ok) {
+      if (response.status !== 200) {
         throw new Error("Failed to delete notification");
       }
 
-      setNotifications((prev) => prev.filter((n) => n.id !== notificationId));
+      setNotifications(notifications.filter((n) => n.id !== notificationId));
     } catch (error) {
       console.error(error.message);
     }
@@ -59,23 +60,25 @@ const DisplayEmails: React.FC<DisplayEmailsProps> = ({
           console.error("No token found in cookies.");
           return;
         }
-        const response = await fetch("https://medical-backend-project.onrender.com/api/user/role", {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-        });
+        const response = await axios.get(
+          "https://medical-backend-project.onrender.com/api/user/role",
+          {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
 
-        if (!response.ok) {
+        if (response.status !== 200) {
           throw new Error("Failed to fetch user data");
         }
 
-        const data = await response.json();
+        const data = response.data;
         setRole(data.role);
         setLoading(false);
       } catch (error) {
-        setErrorState(error.message);
+        setErrorState(error.message); // Use setErrorState for consistency
         setLoading(false);
       }
     };
@@ -84,59 +87,46 @@ const DisplayEmails: React.FC<DisplayEmailsProps> = ({
   }, []);
 
   useEffect(() => {
-    const client = new WebSocket("wss://medical-backend-project.onrender.com");
+    const client = new WebSocket("ws://localhost:3002");
 
     client.onopen = () => {
       console.log("WebSocket Client Connected");
     };
 
     client.onmessage = (event) => {
-      console.log("Received WebSocket Message:", event.data); // Log the message for debugging
-
-      try {
-        const data = JSON.parse(event.data);
-        if (data.type === "new_notification" && data.notification?.id) {
-          setNotifications((prev) => [...prev, data.notification]);
-        } else {
-          console.error("Invalid notification format:", data);
-        }
-      } catch (error) {
-        console.error("Failed to parse WebSocket message:", error);
+      const data = JSON.parse(event.data);
+      if (data.type === "new_notification" && data.notification.id) {
+        setNotifications((prev) => [...prev, data.notification]);
+      } else {
+        console.error("Notification is missing an id:", data.notification);
       }
     };
 
-    client.onerror = (error) => {
-      console.error("WebSocket Error:", error);
-    };
-
-    client.onclose = () => {
-      console.log("WebSocket Connection Closed");
-    };
-
     return () => {
-      client.close();
+      client.close(); // Close the connection when the component unmounts
     };
   }, []);
 
   useEffect(() => {
     const fetchNotifications = async () => {
       try {
-        const response = await fetch(
+        const response = await axios.get(
           "https://medical-backend-project.onrender.com/api/formNotifications"
         );
-        if (!response.ok) {
+        if (response.status !== 200) {
           throw new Error("Failed to fetch notifications");
         }
-        const data: Notification[] = await response.json();
+        const data: Notification[] = response.data; // Specify the type
         setNotifications(data);
       } catch (error) {
-        setErrorState(error.message);
+        setErrorState(error.message); // Set the error message
       }
     };
 
     fetchNotifications();
   }, []);
 
+  // Handle loading and error states in your render
   if (loading) {
     return <div>Loading...</div>;
   }
@@ -168,6 +158,8 @@ const DisplayEmails: React.FC<DisplayEmailsProps> = ({
           </li>
         ))}
       </ul>
+      <br />
+      <br />
     </div>
   );
 };
