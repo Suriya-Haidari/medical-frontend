@@ -164,117 +164,6 @@
 //           )}
 //         </div>
 
-//         <div>
-//           <label htmlFor="option" className="block text-sm font-medium ">
-//             Section
-//           </label>
-//           <select
-//             id="option"
-//             name="option"
-//             value={option}
-//             onChange={(e) => setOption(e.target.value)}
-//             required
-//             className="mt-1 block dark:text-black w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none"
-//           >
-//             <option value="">Select Section:</option>
-//             <option value="hospital">Hospital</option>
-//             <option value="doctors">Doctors News</option>
-//             <option value="sick">Sick People News</option>
-//           </select>
-//         </div>
-
-//         <div>
-//           <label htmlFor="image" className="block text-sm font-medium ">
-//             Image:
-//           </label>
-//           <input
-//             id="image"
-//             type="file"
-//             name="image"
-//             accept="image/png"
-//             ref={fileInputRef} // Attach the ref here
-//             onChange={(e) => {
-//               const file = e.target.files[0];
-//               const allowedTypes = ["image/png"];
-
-//               if (file && !allowedTypes.includes(file.type)) {
-//                 setError("Only JPEG, PNG, or GIF images are allowed.");
-//                 setImage(null); // Reset image if validation fails
-//               } else {
-//                 setError(""); // Clear error if valid
-//                 setImage(file);
-//               }
-//             }}
-//             required
-//             className="mt-1 dark:text-black block w-full text-sm text-gray-500 file:border file:border-gray-300 file:bg-gray-50 file:px-3 file:py-2 file:rounded-md hover:file:bg-gray-100"
-//           />
-
-//           {image && image.size > 5 * 1024 * 1024 && (
-//             <p className="text-red-500 text-sm mt-1">
-//               Image must be smaller than 5MB.
-//             </p>
-//           )}
-//         </div>
-
-//         <div className="mt-2">
-//           <label className="block text-sm font-medium ">Image Preview:</label>
-//           <div className="w-full h-48 border border-gray-300 rounded-md overflow-hidden">
-//             {image ? (
-//               <Image
-//                 src={URL.createObjectURL(image)}
-//                 alt="Preview"
-//                 className="object-cover w-full h-full"
-//                 layout="responsive"
-//                 width={500}
-//                 height={300}
-//               />
-//             ) : (
-//               <img
-//                 src="./placeholder.png"
-//                 alt="Placeholder"
-//                 className="object-cover w-full h-full"
-//               />
-//             )}
-//           </div>
-//         </div>
-//         <button
-//           type="submit"
-//           disabled={
-//             paragraph.length < 60 ||
-//             paragraph.length > 100 ||
-//             title.length > 25 ||
-//             !image ||
-//             image.size > 5 * 1024 * 1024 ||
-//             !!error // Ensure error is a boolean
-//           }
-//           className={`w-full px-4 py-2 text-white font-semibold rounded-md shadow-sm ${
-//             paragraph.length < 60 ||
-//             paragraph.length > 100 ||
-//             title.length > 25 ||
-//             !image ||
-//             image.size > 5 * 1024 * 1024 ||
-//             !!error
-//               ? "bg-gray-400 cursor-not-allowed"
-//               : "bg-blue-500 hover:bg-blue-600"
-//           }`}
-//         >
-//           Upload
-//         </button>
-//       </form>
-
-//       {notification && (
-//         <Notification
-//           message={notification.message}
-//           type={notification.type}
-//           onClose={handleCloseNotification}
-//         />
-//       )}
-//       <br />
-//       <br />
-//     </div>
-//   );
-// }
-
 "use client";
 
 import React, { useState, useRef } from "react"; // Import useRef
@@ -551,10 +440,10 @@ export default function CreateForm() {
           Create
         </button>
 
-        <button
+       <button
           type="button"
           onClick={handleCancel} // Call handleCancel on click
-          className="w-full px-4 py-2 text-white font-semibold rounded-md bg-teal-500 hover:bg-red-600"
+          className="w-full px-4 py-2 text-white font-semibold rounded-md bg-teal-500  hover:bg-teal-600"
         >
           Cancel
         </button>
