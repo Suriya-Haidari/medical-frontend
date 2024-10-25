@@ -188,7 +188,6 @@
 
 
 
-
 import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
 import axios from "axios";
@@ -210,8 +209,8 @@ export default function EditForm() {
   const [error, setError] = useState("");
   const [imagePreview, setImagePreview] = useState<string | null>(null);
 
-  const MIN_PARAGRAPH_LIMIT = 5;
-  const MAX_PARAGRAPH_LIMIT = 60;
+  const MIN_PARAGRAPH_LIMIT = 60; // Updated minimum limit to 6
+  const MAX_PARAGRAPH_LIMIT = 100; // Updated maximum limit to 59
   const MIN_TITLE_LENGTH = 5;
   const MAX_TITLE_LENGTH = 25;
   const MAX_IMAGE_SIZE = 5 * 1024 * 1024;
@@ -256,8 +255,10 @@ export default function EditForm() {
       dispatch(updateItem({ id: editItem.id, data: response.data }));
       dispatch(clearEditItem());
 
-      // Reload the page after a successful update
-      window.location.reload();
+      // Optionally reload or redirect after a delay to allow the user to see the update
+      setTimeout(() => {
+        window.location.reload();
+      }, 1500);
     } catch (error) {
       console.error("Error updating item:", error);
       setError(
@@ -375,11 +376,11 @@ export default function EditForm() {
 
         {/* Image preview */}
         {imagePreview && (
-          <div className="mb-4">
+          <div className="mb-4 flex justify-center">
             <img
               src={imagePreview}
               alt="Selected Preview"
-              className="w-full h-auto rounded"
+              className="w-6/12 h-6/12 rounded" // Keep the size as is
             />
           </div>
         )}
