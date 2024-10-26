@@ -65,8 +65,8 @@ export default function AdminDashboard() {
         setChartData(data);
       } catch (error) {
         console.error("Error fetching registration data:", error);
-            Cookies.remove("token"); // Remove the token
-        window.location.href = "/signin"; // Redirect to sign-in page
+       Cookies.remove("token"); // Remove the token
+        window.location.href = "/medical-frontend/signin";
       }
     };
 
