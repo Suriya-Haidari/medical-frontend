@@ -62,7 +62,7 @@ export default function UserProfile() {
         console.error("Error fetching users:", err);
         setError("An error occurred while fetching users");
         Cookies.remove("token"); // Remove the token
-        window.location.href = "/signin"; // Redirect to sign-in page
+        window.location.href = "/medical-frontend/signin";
       } finally {
         setIsLoading(false);
       }
