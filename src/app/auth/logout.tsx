@@ -1,45 +1,42 @@
+import express from "express";
+import jwt from "jsonwebtoken"; // Ensure this is installed
+import db from "../utils/db.js"; // Import your database module
 
+const router = express.Router();
 
-import axios from "axios";
-import { useDispatch } from "react-redux";
-import { useRouter } from "next/navigation";
-import { setAuthenticated } from "../store/slices/authSlice";
-import Cookies from "js-cookie"; // Import js-cookie
+router.post("/logout", async (req, res) => {
+  try {
+    // Extract the token from the cookie
+    const token = req.cookies.token || req.headers.authorization?.split(" ")[1];
 
-const LogoutButton = () => {
-  const dispatch = useDispatch();
-  const router = useRouter();
-
-  const handleLogout = async () => {
-    try {
-      // Send POST request to log out
-      await axios.post(
-        "https://medical-backend-project.onrender.com/api/logout",
-        {},
-        { withCredentials: true }
-      );
-
-      // Clear the authentication cookie manually
-      Cookies.remove("token");
-
-      // Update the global auth state
-      dispatch(setAuthenticated(false));
-
-      // Redirect to sign in page after logout
-      router.push("/signin");
-    } catch (error) {
-      console.error("Failed to log out:", error);
+    if (!token) {
+      return res.status(401).json({ message: "No token provided." });
     }
-  };
 
-  return (
-    <button
-      onClick={handleLogout}
-      className="bg-red-500 text-white px-4 py-2 rounded"
-    >
-      Log Out
-    </button>
-  );
-};
+    // Verify and decode the token to get the user ID
+    const decoded = jwt.verify(token, process.env.JWT_SECRET); // Ensure JWT_SECRET is defined in your .env
+    const userId = decoded.userId; // Adjust according to your token's payload structure
 
-export default LogoutButton;
+    // Clear the token cookie from the browser
+    res.clearCookie("token", {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "lax",
+    });
+
+    // Remove the session_id from the database
+    await db.query("UPDATE users SET session_id = NULL WHERE id = $1", [
+      userId,
+    ]);
+
+    res.json({ message: "Logged out successfully" });
+  } catch (error) {
+    console.error("Logout error:", error); // Log the error for debugging
+    if (error instanceof jwt.JsonWebTokenError) {
+      return res.status(401).json({ message: "Invalid token." });
+    }
+    res.status(500).json({ message: "Failed to log out." });
+  }
+});
+
+export default router;
