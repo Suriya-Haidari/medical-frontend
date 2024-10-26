@@ -41,6 +41,9 @@ export default function UserUpdate() {
       } catch (error) {
         console.error("Failed to fetch user data:", error);
         setError("An error occurred while fetching user data");
+        
+        Cookies.remove("token"); // Remove the token
+        window.location.href = "/signin"; // Redirect to sign-in page
       } finally {
         setIsLoading(false);
       }
