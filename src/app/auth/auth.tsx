@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Cookies from "js-cookie";
+import Loading from "../loading";
 
 const AuthRoute = ({ children }) => {
   const router = useRouter();
@@ -35,7 +36,7 @@ const AuthRoute = ({ children }) => {
   }, [router]);
 
   if (!isAuthenticated) {
-    return <p>Loading...</p>; // Display loading state while checking authentication
+    return <Loading />; // Display loading state while checking authentication
   }
 
   return <>{children}</>; // Render the child components if authenticated
