@@ -20,7 +20,7 @@ const LogoutButton = () => {
       );
 
       // Clear the authentication cookie manually
-      Cookies.remove("token"); // Forcefully remove cookie
+      Cookies.remove("token");
 
       // Update the global auth state
       dispatch(setAuthenticated(false));
