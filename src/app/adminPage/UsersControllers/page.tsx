@@ -35,6 +35,9 @@ export default function AdminProfile() {
       } catch (err) {
         console.error("Error fetching users:", err);
         setError("An error occurred while fetching users");
+        
+        Cookies.remove("token"); // Remove the token
+        window.location.href = "/signin"; // Redirect to sign-in page
       } finally {
         setIsLoading(false);
       }
