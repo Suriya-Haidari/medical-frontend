@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 import Cookies from "js-cookie";
-import Image from "next/image"; // Replacing <img> with Image for optimization
+import Image from "next/image";
 import "./style.css";
 
 export default function ItemCard({
@@ -71,7 +71,12 @@ export default function ItemCard({
         setRole(response.data.role);
       } catch (error) {
         console.error("Error fetching user role:", error);
-        setRole("user");
+
+        // Handle token expiration or error
+        Cookies.remove("token"); // Remove the token
+        window.location.href = "/signin"; // Redirect to sign-in page
+
+        setRole("user"); // Optional: fallback to default role
       }
     };
 
