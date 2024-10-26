@@ -58,6 +58,8 @@ export default function AdminDashboard() {
       } catch (error) {
         console.error("Error fetching users:", error);
         setErrorMessage("Failed to load user data.");
+           Cookies.remove("token"); // Remove the token
+        window.location.href = "/signin"; // Redirect to sign-in page
       }
     };
 
