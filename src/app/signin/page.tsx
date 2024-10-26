@@ -17,8 +17,7 @@ const SignInForm = () => {
     event.preventDefault();
 
     try {
-      // Log the payload being sent to the API
-      console.log({ email, password });
+    
 
       const response = await axios.post(
         "https://medical-backend-project.onrender.com/api/signin",
