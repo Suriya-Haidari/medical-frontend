@@ -191,7 +191,10 @@ export default function Posts() {
                       />
                     ))}
                   </div>
-                ) : null}{" "}
+                ) : <p className="text-center text-lg">
+                    Keep waiting still the posts are fetching or maybe here is
+                    not any post availabe!
+                  </p>}
               </div>
             )}
           </div>
