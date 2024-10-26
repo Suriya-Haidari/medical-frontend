@@ -1,6 +1,6 @@
 import express from "express";
-import jwt from "jsonwebtoken"; // Ensure this is installed
-import db from "../utils/db.js"; // Import your database module
+import jwt from "jsonwebtoken";
+import db from "../utils/db.js"; 
 
 const router = express.Router();
 
