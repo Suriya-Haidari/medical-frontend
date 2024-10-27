@@ -77,10 +77,6 @@ const ContactForm: React.FC = () => {
         }
       );
 
-      // Check if the response is successful
-      if (response.status !== 200) {
-        throw new Error("Error sending notification");
-      }
 
       console.log("Notification sent successfully!");
       setFullName("");
