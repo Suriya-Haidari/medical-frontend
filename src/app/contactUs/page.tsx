@@ -114,7 +114,7 @@ const ContactForm: React.FC = () => {
 
               <div className="relative mb-8 max-w-[310px] border-b-2 border-black/40 mx-auto">
                 <input
-                  type="email"
+                  type="text"
                   name="email"
                   value={email}
                   onChange={handleInputChange}
