@@ -2,8 +2,6 @@
 
 .container__2 {
   position: relative;
-  /* width: 100%; */
-  padding: 20px;
   display: flex;
   justify-content: center;
   align-items: center;
