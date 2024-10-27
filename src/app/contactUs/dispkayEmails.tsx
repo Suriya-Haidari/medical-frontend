@@ -87,7 +87,8 @@ const DisplayEmails: React.FC<DisplayEmailsProps> = ({
   }, []);
 
   useEffect(() => {
-    const client = new WebSocket("ws://localhost:3002");
+   const client = new WebSocket("wss://medical-backend-project.onrender.com");
+
 
     client.onopen = () => {
       console.log("WebSocket Client Connected");
