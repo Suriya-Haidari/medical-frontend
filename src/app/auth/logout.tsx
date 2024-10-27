@@ -1,42 +1,43 @@
-import express from "express";
-import jwt from "jsonwebtoken";
-import db from "../utils/db.js"; 
+import axios from "axios";
+import { useDispatch } from "react-redux";
+import { useRouter } from "next/navigation";
+import { setAuthenticated } from "../store/slices/authSlice";
+import Cookies from "js-cookie";
 
-const router = express.Router();
+const LogoutButton = () => {
+  const dispatch = useDispatch();
+  const router = useRouter();
 
-router.post("/logout", async (req, res) => {
-  try {
-    // Extract the token from the cookie
-    const token = req.cookies.token || req.headers.authorization?.split(" ")[1];
+  const handleLogout = async () => {
+    try {
+      // Send POST request to logout route
+      await axios.post(
+        "https://medical-backend-project.onrender.com/api/logout",
+        {},
+        { withCredentials: true }
+      );
 
-    if (!token) {
-      return res.status(401).json({ message: "No token provided." });
+      // Forcefully remove the token from cookies on frontend
+      Cookies.remove("token");
+
+      // Update the authentication state
+      dispatch(setAuthenticated(false));
+
+      // Redirect to the sign-in page
+      router.push("/signin");
+    } catch (error) {
+      console.error("Failed to log out:", error);
     }
+  };
 
-    // Verify and decode the token to get the user ID
-    const decoded = jwt.verify(token, process.env.JWT_SECRET); // Ensure JWT_SECRET is defined in your .env
-    const userId = decoded.userId; // Adjust according to your token's payload structure
+  return (
+    <button
+      onClick={handleLogout}
+      className="bg-red-500 text-white px-4 py-2 rounded"
+    >
+      Log Out
+    </button>
+  );
+};
 
-    // Clear the token cookie from the browser
-    res.clearCookie("token", {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "lax",
-    });
-
-    // Remove the session_id from the database
-    await db.query("UPDATE users SET session_id = NULL WHERE id = $1", [
-      userId,
-    ]);
-
-    res.json({ message: "Logged out successfully" });
-  } catch (error) {
-    console.error("Logout error:", error); // Log the error for debugging
-    if (error instanceof jwt.JsonWebTokenError) {
-      return res.status(401).json({ message: "Invalid token." });
-    }
-    res.status(500).json({ message: "Failed to log out." });
-  }
-});
-
-export default router;
+export default LogoutButton;
