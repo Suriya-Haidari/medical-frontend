@@ -16,7 +16,7 @@ const Footer = () => {
       title: "Resources",
       links: [
         { text: "F&Q", url: "/medical-frontend/faq" },
-        { text: "Contact Us", url: "/medical-frontend/services/contactUs" },
+        { text: "Contact Us", url: "/medical-frontend/contactUs" },
       ],
     },
     {
