@@ -9,7 +9,7 @@ const Footer = () => {
       links: [
         { text: "Home", url: "/medical-frontend/home" },
         { text: "About", url: "/medical-frontend/about" },
-        { text: "Department", url: "/medical-frontend/department" },
+        { text: "Department", url: "/medical-frontend/departments" },
       ],
     },
     {
