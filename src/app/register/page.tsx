@@ -7,6 +7,7 @@ import { setAuthenticated } from "../store/slices/authSlice";
 import Cookies from "js-cookie";
 import HandleGoogleLogin from "../auth/HandleLogin";
 import { RootState } from "../store/store";
+import Loading from "../loading";
 
 const RegisterForm = () => {
   const [email, setEmail] = useState("");
@@ -71,8 +72,8 @@ const RegisterForm = () => {
     }
   };
 
-  if (isLoading) {
-    return <p>Loading...</p>;
+if (isLoading) {
+    return <Loading />;
   }
 
   if (isAuthenticated) {
