@@ -33,7 +33,6 @@ export default function Navbar() {
       try {
         const token = Cookies.get("token");
         if (!token) {
-          console.error("No token found in cookies.");
           return;
         }
 
