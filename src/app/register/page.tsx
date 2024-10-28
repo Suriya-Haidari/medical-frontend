@@ -59,7 +59,7 @@ const RegisterForm = () => {
       );
       if (response.status === 201) {
         Cookies.set("token", response.data.token, {
-          expires: 7,
+          expires: 1,
           path: "/",
           sameSite: "Lax",
         }); // Set token with an expiration of 71days
