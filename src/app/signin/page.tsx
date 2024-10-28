@@ -26,7 +26,7 @@ const SignInForm = () => {
       if (response.status === 200) {
         // Store token in cookie after successful sign-in
         Cookies.set("token", response.data.token, {
-          expires: 7, // Token expires in 7 days
+          expires: 1, // Token expires in 1 days
           path: "/",
           sameSite: "Lax",
         });
