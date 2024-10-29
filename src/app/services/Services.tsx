@@ -72,7 +72,7 @@ const Services: React.FC<ServicesProps> = ({ services }) => {
                 {service.description}
               </p>
               <a
-                href="/about"
+                href="/medical-frontend/about"
                 className="inline-block text-white border border-green-200 hover:bg-teal-400 bg-teal-400 hover:text-white transition duration-300 font-semibold py-2 px-4 rounded-xl"
               >
                 Learn More
