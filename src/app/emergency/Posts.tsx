@@ -357,7 +357,7 @@ export default function Posts() {
 
         {/* Display notifications as a modal or dropdown */}
         {showNotifications && (
-          <div className="mt-20 absolute z-50 dark:bg-black border-white border right-0 mt-2 w-64 bg-white shadow-lg rounded-md">
+          <div className="mt-11 absolute z-50 dark:bg-black border-white border right-10 mt-2 w-64 bg-white shadow-lg rounded-md">
             <Notif />
           </div>
         )}
