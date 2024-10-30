@@ -168,7 +168,7 @@ export default function CreateForm() {
               {paragraph.length < 60
                 ? "Paragraph must be at least 60 characters."
                 : paragraph.length > 100
-                ? "Paragraph must not exceed 100 characters."
+                ? "Paragraph must not be more than 100 characters."
                 : ""}
             </p>
           )}
