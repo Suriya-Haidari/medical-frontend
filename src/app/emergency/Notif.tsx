@@ -101,7 +101,6 @@
 // };
 
 // export default Notifications;
-
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import CreatingNewNotification from "./CreatingNewNotification";
@@ -220,12 +219,15 @@ const Notifications = () => {
               className="unread dark:text-gray-200 bg-gray-200 dark:bg-neutral-800 p-4 bg-gray-100 rounded-md border border-gray-300 flex justify-between items-center"
             >
               <p>{notification.message}</p>
-              <button
-                onClick={() => markAsRead(notification.id)}
-                className="ml-4 bg-teal-500 text-white rounded-lg px-1 py-1 hover:bg-teal-600 transition-colors"
-              >
-                Mark as Read
-              </button>
+
+              {role === "manager" && (
+                <button
+                  onClick={() => markAsRead(notification.id)}
+                  className="ml-4 bg-teal-500 text-white rounded-lg px-1 py-1 hover:bg-teal-600 transition-colors"
+                >
+                  Mark as Read
+                </button>
+              )}
             </li>
           ))}
         </ul>
