@@ -1,14 +1,12 @@
 "use client";
 import ClientReview from "./ClientReview";
 import Process from "./Process";
-import AuthRoute from "../auth/auth";
 import { clientReviews, imagesData } from "./data";
 import "./style.css";
 import Link from "next/link";
 
 export default function About() {
   return (
-    <AuthRoute>
       <div className="flex w-full flex-col justify-center items-center dark:bg-neutral-900 bg-white p-6">
         <h1 className="text-5xl font-bold dark:text-white mb-10 mt-8 sm:mt-12 text-center">
           About Our Hospital
@@ -56,6 +54,5 @@ export default function About() {
           <Process images={imagesData} />
         </div>
       </div>
-    </AuthRoute>
   );
 }
