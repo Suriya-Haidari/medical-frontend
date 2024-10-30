@@ -204,7 +204,6 @@
 //   );
 // }
 
-
 "use client";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
@@ -219,6 +218,8 @@ import FilterButtons from "./FilterButtons";
 import { RootState } from "../store/store";
 import { useRouter } from "next/navigation";
 import Cookies from "js-cookie";
+import Notif from "./Notif";
+import { BellIcon } from "@heroicons/react/24/outline";
 
 export default function Posts() {
   const dispatch = useDispatch();
@@ -232,6 +233,7 @@ export default function Posts() {
   const router = useRouter();
   const [role, setRole] = useState<string | null>(null); // State for storing the user role
   const [loading, setLoading] = useState<boolean>(false); // Loading state
+  const [showNotifications, setShowNotifications] = useState(false);
 
   useEffect(() => {
     const fetchUserRole = async () => {
@@ -343,7 +345,24 @@ export default function Posts() {
 
   return (
     <div className="bg-white dark:bg-neutral-900">
-      <div className="ml-10 sm:ml-0 mt-10 sm:mt-0">
+      <div className="relative flex">
+        {/* Button stays visible */}
+        <button
+          onClick={() => setShowNotifications(!showNotifications)}
+          className="text-gray-900 dark:text-gray-200 ml-auto mr-4 mt-1"
+        >
+          <span className="sr-only">View notifications</span>
+          <BellIcon className="h-6 w-6" />
+        </button>
+
+        {/* Display notifications as a modal or dropdown */}
+        {showNotifications && (
+          <div className="mt-20 absolute z-50 dark:bg-black border-white border right-0 mt-2 w-64 bg-white shadow-lg rounded-md">
+            <Notif />
+          </div>
+        )}
+      </div>
+      <div className="ml-10 -mt-20 sm:ml-0 sm:mt-0">
         {/* Conditionally render buttons based on user role */}
         {role === "manager" ? (
           <>
@@ -422,7 +441,6 @@ export default function Posts() {
                     not any post availabe!
                   </p>
                 )}
-                {/* Changed this line to only render nothing when there are no posts */}
               </div>
             )}
           </div>
