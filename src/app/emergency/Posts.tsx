@@ -23,7 +23,7 @@ export default function Posts() {
   const expandedItemId = useSelector(
     (state: RootState) => state.expandedItem.expandedItemId
   );
-
+ 
   const router = useRouter();
   const [role, setRole] = useState<string | null>(null); // State for storing the user role
   const [loading, setLoading] = useState<boolean>(false); // Loading state
