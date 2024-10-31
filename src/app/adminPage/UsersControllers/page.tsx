@@ -1,3 +1,4 @@
+
 "use client";
 import { useState, useEffect } from "react";
 import axios from "axios";
@@ -5,6 +6,7 @@ import { FaTrash } from "react-icons/fa";
 import Cookies from "js-cookie";
 import Search from "./Search";
 import AuthRoute from "../../auth/auth";
+import { useRouter } from "next/navigation";
 
 export default function AdminProfile() {
   const [users, setUsers] = useState([]);
@@ -12,6 +14,10 @@ export default function AdminProfile() {
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
+  const [role, setRole] = useState<string | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [errorr, setErrorState] = useState<string | null>(null); // Avoid shadowing setError
+  const router = useRouter();
   useEffect(() => {
     async function fetchUsers() {
       try {
@@ -36,7 +42,7 @@ export default function AdminProfile() {
       } catch (err) {
         console.error("Error fetching users:", err);
         setError("An error occurred while fetching users");
-        
+
         Cookies.remove("token"); // Remove the token
         window.location.href = "/signin"; // Redirect to sign-in page
       } finally {
@@ -53,6 +59,43 @@ export default function AdminProfile() {
     );
     setFilteredUsers(filtered);
   };
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const token = Cookies.get("token");
+        if (!token) {
+          console.error("No token found in cookies.");
+          return;
+        }
+        const response = await axios.get(
+          "https://medical-backend-project.onrender.com/api/user/role",
+          {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+
+        if (response.status !== 200) {
+          throw new Error("Failed to fetch user data");
+        }
+
+        const data = response.data;
+        setRole(data.role);
+        setLoading(false);
+        if (data.role !== "manager") {
+          router.push("/emergency"); // Redirect to sign-in page
+        }
+      } catch (error) {
+        setErrorState(error.message); // Use setErrorState for consistency
+        setLoading(false);
+      }
+    };
+
+    fetchUserData();
+  }, []);
 
   const handleSuggestionClick = (suggestion: string) => {
     setFilteredUsers(
@@ -133,61 +176,64 @@ export default function AdminProfile() {
 
   return (
     <AuthRoute>
-    <div className="min-h-screen bg-gray-100 flex flex-col dark:bg-black items-center justify-center overflow-x-hidden">
-      <div className="w-full max-w-4xl mx-4 dark:bg-black dark:text-gray-200 bg-white rounded-lg shadow-md p-6">
-        <h1 className="text-2xl font-bold mb-4 text-center">Admin Panel</h1>
-        <p className="text-center mb-4">
-          As a manager, you can view all user accounts, promote users to admin,
-          and delete accounts as necessary. Use the options below to manage your
-          platform users effectively.
-        </p>
-        {error && <p className="text-red-500 mb-4 text-center">{error}</p>}
-        <br />
+      {role === "manager" && (
+        <div className="min-h-screen bg-gray-100 flex flex-col dark:bg-black items-center justify-center overflow-x-hidden">
+          <div className="w-full max-w-4xl mx-4 dark:bg-black dark:text-gray-200 bg-white rounded-lg shadow-md p-6">
+            <h1 className="text-2xl font-bold mb-4 text-center">Admin Panel</h1>
+            <p className="text-center mb-4">
+              As a manager, you can view all user accounts, promote users to
+              admin, and delete accounts as necessary. Use the options below to
+              manage your platform users effectively.
+            </p>
+            {error && <p className="text-red-500 mb-4 text-center">{error}</p>}
+            <br />
 
-        {/* Search component */}
-        <Search
-          onSearch={handleSearch}
-          suggestions={filteredUsers.map((user) => user.email)} // Pass filtered suggestions
-          onSuggestionClick={handleSuggestionClick}
-        />
-        <br />
-        <h2 className="text-xl font-semibold mb-4 text-center">All Users</h2>
-        {/* Responsive Card View */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {filteredUsers.map((user) => (
-            <div
-              key={user.id}
-              className="border dark:bg-neutral-800 dark:text-gray-200 rounded-lg p-4 bg-white shadow-md"
-            >
-              <h3 className="text-gray-800 font-semibold truncate dark:text-gray-200">
-                {user.email}
-              </h3>
-              <p className="text-gray-600 dark:text-gray-400">
-                Role: {user.role}
-              </p>
-              <div className="mt-2 flex flex-col space-y-2">
-                {user.role !== "admin" && (
-                  <button
-                    onClick={() => handleVerify(user.id)}
-                    className="bg-teal-500 text-white hover:bg-teal-600 py-2 px-4 rounded transition duration-200 ease-in-out text-sm flex items-center justify-center"
-                  >
-                    Verify as Admin
-                  </button>
-                )}
-                <button
-                  onClick={() => adminHandleDelete(user.id)}
-                  className="bg-gray-200 text-black hover:bg-gray-300 py-2 px-4 rounded flex items-center justify-center transition duration-200 ease-in-out text-sm"
+            {/* Search component */}
+            <Search
+              onSearch={handleSearch}
+              suggestions={filteredUsers.map((user) => user.email)} // Pass filtered suggestions
+              onSuggestionClick={handleSuggestionClick}
+            />
+            <br />
+            <h2 className="text-xl font-semibold mb-4 text-center">
+              All Users
+            </h2>
+            {/* Responsive Card View */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              {filteredUsers.map((user) => (
+                <div
+                  key={user.id}
+                  className="border dark:bg-neutral-800 dark:text-gray-200 rounded-lg p-4 bg-white shadow-md"
                 >
-                  <FaTrash className="text-sm mr-1" />
-                  <span>Delete</span>
-                </button>
-              </div>
+                  <h3 className="text-gray-800 font-semibold truncate dark:text-gray-200">
+                    {user.email}
+                  </h3>
+                  <p className="text-gray-600 dark:text-gray-400">
+                    Role: {user.role}
+                  </p>
+                  <div className="mt-2 flex flex-col space-y-2">
+                    {user.role !== "admin" && (
+                      <button
+                        onClick={() => handleVerify(user.id)}
+                        className="bg-teal-500 text-white hover:bg-teal-600 py-2 px-4 rounded transition duration-200 ease-in-out text-sm flex items-center justify-center"
+                      >
+                        Verify as Admin
+                      </button>
+                    )}
+                    <button
+                      onClick={() => adminHandleDelete(user.id)}
+                      className="bg-gray-200 text-black hover:bg-gray-300 py-2 px-4 rounded flex items-center justify-center transition duration-200 ease-in-out text-sm"
+                    >
+                      <FaTrash className="text-sm mr-1" />
+                      <span>Delete</span>
+                    </button>
+                  </div>
+                </div>
+              ))}
             </div>
-          ))}
+          </div>
         </div>
-      </div>
-    </div>
+      )}
     </AuthRoute>
-
   );
 }
