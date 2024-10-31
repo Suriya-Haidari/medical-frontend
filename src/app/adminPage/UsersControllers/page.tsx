@@ -4,7 +4,7 @@ import axios from "axios";
 import { FaTrash } from "react-icons/fa";
 import Cookies from "js-cookie";
 import Search from "./Search";
-import AuthRoute from "../auth/auth";
+import AuthRoute from "../../auth/auth";
 
 export default function AdminProfile() {
   const [users, setUsers] = useState([]);
