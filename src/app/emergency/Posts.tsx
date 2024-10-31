@@ -138,12 +138,12 @@ export default function Posts() {
   };
 
   return (
-   <div className="bg-white dark:bg-neutral-900">
+  <div className="bg-white dark:bg-neutral-900">
       <div className="relative flex items-center mt-4 sm:mt-1">
-        {/* Notification button with increased margin for smaller devices */}
+        {/* Notification button with increased margin for larger devices */}
         <button
           onClick={() => setShowNotifications(!showNotifications)}
-          className="text-gray-900 dark:text-gray-200 ml-auto mr-4 mt-10 sm:mt-1" // Increased mt-6 for better spacing
+          className="text-gray-900 dark:text-gray-200 ml-auto mr-4 mt-10 sm:mt-1 lg:mt-12 lg:mr-6" // Adjusted margin for larger screens
         >
           <span className="sr-only">View notifications</span>
           <BellIcon className="h-6 w-6" />
@@ -158,19 +158,20 @@ export default function Posts() {
       </div>
 
       {/* User Role Buttons */}
-      <div className="ml-10 mt-2 sm:ml-0 sm:mt-4">
+      <div className="ml-10 lg:-mt-10 mt-2 sm:ml-0 sm:mt-4 lg:mt-2">
+        {/* Reduced margin top for large devices */}
         {role === "manager" ? (
           <>
             <button
               onClick={handleAdminPanelNavigation}
-              className="w-10/12 sm:w-2/12 bg-teal-500 text-white py-2 rounded my-4 dark:bg-gray-200 dark:text-black"
+              className="w-10/12 sm:w-2/12 bg-teal-500 text-white py-2 rounded my-4 lg:my-2 dark:bg-gray-200 dark:text-black"
             >
               Open Admin Panel
             </button>
             &nbsp;
             <button
               onClick={handleCreateNewPost}
-              className="w-10/12 sm:w-2/12 bg-teal-500 text-white py-2 rounded my-4 dark:bg-gray-200 dark:text-black"
+              className="w-10/12 sm:w-2/12 bg-teal-500 text-white py-2 rounded my-4 lg:my-2 dark:bg-gray-200 dark:text-black"
             >
               Create New Post
             </button>
@@ -179,14 +180,14 @@ export default function Posts() {
           <>
             <button
               onClick={handleCreateNewPost}
-              className="w-10/12 sm:w-2/12 bg-teal-500 text-white py-2 rounded my-4 dark:bg-gray-200 dark:text-black"
+              className="w-10/12 sm:w-2/12 bg-teal-500 text-white py-2 rounded my-4 lg:my-2 dark:bg-gray-200 dark:text-black"
             >
               Create New Post
             </button>
             &nbsp;
             <button
               onClick={handleProfileNavigation}
-              className="w-10/12 sm:w-2/12 bg-teal-500 text-white py-2 rounded my-4 dark:bg-gray-200 dark:text-black"
+              className="w-10/12 sm:w-2/12 bg-teal-500 text-white py-2 rounded my-4 lg:my-2 dark:bg-gray-200 dark:text-black"
             >
               Open Profile Page
             </button>
@@ -194,7 +195,7 @@ export default function Posts() {
         ) : (
           <button
             onClick={handleProfileNavigation}
-            className="w-10/12 sm:w-2/12 bg-green-500 text-white py-2 rounded my-4"
+            className="w-10/12 sm:w-2/12 bg-green-500 text-white py-2 rounded my-4 lg:my-2"
           >
             Open Profile Page
           </button>
