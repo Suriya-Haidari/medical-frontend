@@ -6,7 +6,7 @@ import { fetchItems, deleteItem } from "../store/slices/itemsSlice";
 import { setEditItem } from "../store/slices/editSlice";
 import { setFilter } from "../store/slices/filterSlice";
 import { setExpandedItemId } from "../store/slices/expandedItemState";
-import ItemCard from "./ItemCard";
+import ItemCard from "./ItemCard"; 
 import EditForm from "./EditForm";
 import FilterButtons from "./FilterButtons";
 import { RootState } from "../store/store";
