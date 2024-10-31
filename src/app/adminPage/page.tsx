@@ -8,6 +8,7 @@ import Graph from "./Chart";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Notif from "../emergency/Notif";
+import AuthRoute from "../auth/auth";
 
 const navigation = [
   { name: "Dashboard", href: "/medical-frontend/", current: true },
@@ -67,6 +68,7 @@ export default function AdminDashboard() {
   }, []);
 
   return (
+  <AuthRoute>
     <div className="min-h-screen manager__page w-full bg-gray-100 dark:bg-neutral-900">
       {/* Navbar */}
       <Disclosure as="nav" className="bg-gray-200 dark:bg-neutral-800 w-full">
@@ -270,5 +272,6 @@ export default function AdminDashboard() {
         </main>
       </div>
     </div>
+  </AuthRoute>
   );
 }
