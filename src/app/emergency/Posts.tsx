@@ -138,8 +138,8 @@ export default function Posts() {
   };
 
   return (
-    <div className="bg-white dark:bg-neutral-900">
-      <div className="relative flex">
+     <div className="bg-white dark:bg-neutral-900">
+      <div className="relative flex md:mt-20">
         {/* Button stays visible */}
         <button
           onClick={() => setShowNotifications(!showNotifications)}
@@ -156,7 +156,7 @@ export default function Posts() {
           </div>
         )}
       </div>
-      <div className="ml-10 -mt-20 sm:ml-0 sm:mt-0">
+      <div className="ml-10 lg:-mt-20 md:-mt-30 sm:ml-0 sm:mt-0">
         {/* Conditionally render buttons based on user role */}
         {role === "manager" ? (
           <>
@@ -235,6 +235,7 @@ export default function Posts() {
                     not any post availabe!
                   </p>
                 )}
+                {/* Changed this line to only render nothing when there are no posts */}
               </div>
             )}
           </div>
