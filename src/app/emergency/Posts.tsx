@@ -140,7 +140,6 @@ export default function Posts() {
   return (
   <div className="bg-white dark:bg-neutral-900">
       <div className="relative flex items-center mt-4 sm:mt-1">
-        {/* Notification button with increased margin for larger devices */}
         <button
           onClick={() => setShowNotifications(!showNotifications)}
           className="text-gray-900 dark:text-gray-200 ml-auto mr-4 mt-10 sm:mt-1 lg:mt-12 lg:mr-6" // Adjusted margin for larger screens
