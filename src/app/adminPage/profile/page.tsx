@@ -4,7 +4,7 @@ import axios from "axios";
 import { FaEdit, FaTrash } from "react-icons/fa";
 import Cookies from "js-cookie";
 import EditProfile from "../EditProfile";
-import AuthRoute from "../auth/auth";
+import AuthRoute from "../../auth/auth";
 
 export default function UserProfile() {
   const [users, setUsers] = useState([]);
