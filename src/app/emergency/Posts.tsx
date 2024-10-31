@@ -12,7 +12,7 @@ import FilterButtons from "./FilterButtons";
 import { RootState } from "../store/store";
 import { useRouter } from "next/navigation";
 import Cookies from "js-cookie";
-import Notif from "./Notif";
+import Notif from "./Notif";  
 import { BellIcon } from "@heroicons/react/24/outline";
 
 export default function Posts() {
