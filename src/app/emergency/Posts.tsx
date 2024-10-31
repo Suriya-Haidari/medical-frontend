@@ -1,7 +1,7 @@
 "use client";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
-import axios from "axios";
+import axios from "axios"; 
 import { fetchItems, deleteItem } from "../store/slices/itemsSlice";
 import { setEditItem } from "../store/slices/editSlice";
 import { setFilter } from "../store/slices/filterSlice";
