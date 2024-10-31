@@ -179,7 +179,7 @@ export default function AdminDashboard() {
                           <span className="sr-only">Open user menu</span>
                           <img
                             className="h-8 w-8 rounded-full"
-                            src="/default.jpg"
+                            src="./default.jpg"
                             alt=""
                           />
                           {/* <Image
@@ -193,7 +193,7 @@ export default function AdminDashboard() {
                           <Menu.Item>
                             {({ active }) => (
                               <a
-                                href="/adminPage/profile"
+                                href="/medical-frontend/adminPage/profile"
                                 className={classNames(
                                   active ? "bg-gray-100" : "",
                                   "block px-4 py-2 text-sm text-black"
@@ -206,7 +206,7 @@ export default function AdminDashboard() {
                           <Menu.Item>
                             {({ active }) => (
                               <a
-                                href="/adminPage/UsersControllers"
+                                href="/medical-frontend/adminPage/UsersControllers"
                                 className={classNames(
                                   active ? "bg-gray-100" : "",
                                   "block px-4 py-2 text-sm text-black"
