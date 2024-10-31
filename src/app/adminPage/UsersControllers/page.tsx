@@ -4,6 +4,7 @@ import axios from "axios";
 import { FaTrash } from "react-icons/fa";
 import Cookies from "js-cookie";
 import Search from "./Search";
+import AuthRoute from "../auth/auth";
 
 export default function AdminProfile() {
   const [users, setUsers] = useState([]);
@@ -131,6 +132,7 @@ export default function AdminProfile() {
   }
 
   return (
+    <AuthRoute>
     <div className="min-h-screen bg-gray-100 flex flex-col dark:bg-black items-center justify-center overflow-x-hidden">
       <div className="w-full max-w-4xl mx-4 dark:bg-black dark:text-gray-200 bg-white rounded-lg shadow-md p-6">
         <h1 className="text-2xl font-bold mb-4 text-center">Admin Panel</h1>
@@ -185,5 +187,7 @@ export default function AdminProfile() {
         </div>
       </div>
     </div>
+    </AuthRoute>
+
   );
 }
