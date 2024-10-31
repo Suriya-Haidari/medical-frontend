@@ -4,6 +4,7 @@ import axios from "axios";
 import { FaEdit, FaTrash } from "react-icons/fa";
 import Cookies from "js-cookie";
 import EditProfile from "../EditProfile";
+import AuthRoute from "../auth/auth";
 
 export default function UserProfile() {
   const [users, setUsers] = useState([]);
@@ -112,6 +113,7 @@ export default function UserProfile() {
   }
 
   return (
+    <AuthRoute>
     <div className="min-h-screen py-8 px-4 flex items-center justify-center bg-gray-100 dark:text-black dark:bg-neutral-900 dark:text-gray-200">
       <div className="  bg-white dark:bg-neutral-800 text-black dark:text-white max-w-4xl w-full mx-auto rounded-lg shadow-md p-6">
         <h1 className="text-2xl font-bold mb-4">User Profile</h1>
@@ -189,5 +191,6 @@ export default function UserProfile() {
         {isEditing && <EditProfile />}
       </div>
     </div>
+    </AuthRoute>
   );
 }
