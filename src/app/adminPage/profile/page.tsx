@@ -4,7 +4,8 @@ import axios from "axios";
 import { FaEdit, FaTrash } from "react-icons/fa";
 import Cookies from "js-cookie";
 import EditProfile from "../EditProfile";
-import AuthRoute from "../../auth/auth";
+import { useRouter } from "next/navigation";
+import AuthRoute from "@/app/auth/auth";
 
 export default function UserProfile() {
   const [users, setUsers] = useState([]);
@@ -13,6 +14,10 @@ export default function UserProfile() {
   const [isLoading, setIsLoading] = useState(true);
   const [isEditing, setIsEditing] = useState(false);
 
+  const [role, setRole] = useState<string | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [errorr, setErrorState] = useState<string | null>(null); // Avoid shadowing setError
+  const router = useRouter();
   useEffect(() => {
     async function fetchUserProfile() {
       try {
@@ -63,7 +68,7 @@ export default function UserProfile() {
         console.error("Error fetching users:", err);
         setError("An error occurred while fetching users");
         Cookies.remove("token"); // Remove the token
-        window.location.href = "/medical-frontend/signin";
+        window.location.href = "/signin"; // Redirect to sign-in page
       } finally {
         setIsLoading(false);
       }
@@ -94,7 +99,7 @@ export default function UserProfile() {
         alert("User deleted successfully.");
         setUsers(users.filter((user) => user.id !== userId));
         Cookies.remove("token");
-        window.location.href = "/medical-frontend/signin";
+        window.location.href = "/signin";
       }
     } catch (error) {
       console.error("Error deleting user:", error);
@@ -103,6 +108,43 @@ export default function UserProfile() {
       );
     }
   };
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const token = Cookies.get("token");
+        if (!token) {
+          console.error("No token found in cookies.");
+          return;
+        }
+        const response = await axios.get(
+          "https://medical-backend-project.onrender.com/api/user/role",
+          {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+
+        if (response.status !== 200) {
+          throw new Error("Failed to fetch user data");
+        }
+
+        const data = response.data;
+        setRole(data.role);
+        setLoading(false);
+        if (data.role !== "manager") {
+          router.push("/emergency");
+        }
+      } catch (error) {
+        setErrorState(error.message); // Use setErrorState for consistency
+        setLoading(false);
+      }
+    };
+
+    fetchUserData();
+  }, []);
 
   if (isLoading) {
     return (
@@ -114,83 +156,85 @@ export default function UserProfile() {
 
   return (
     <AuthRoute>
-    <div className="min-h-screen py-8 px-4 flex items-center justify-center bg-gray-100 dark:text-black dark:bg-neutral-900 dark:text-gray-200">
-      <div className="  bg-white dark:bg-neutral-800 text-black dark:text-white max-w-4xl w-full mx-auto rounded-lg shadow-md p-6">
-        <h1 className="text-2xl font-bold mb-4">User Profile</h1>
-        {error && <p className="text-red-500 mb-4">{error}</p>}
+      {role === "manager" && (
+        <div className="min-h-screen py-8 px-4 flex items-center justify-center bg-gray-100 dark:text-black dark:bg-neutral-900 dark:text-gray-200">
+          <div className="  bg-white dark:bg-neutral-800 text-black dark:text-white max-w-4xl w-full mx-auto rounded-lg shadow-md p-6">
+            <h1 className="text-2xl font-bold mb-4">User Profile</h1>
+            {error && <p className="text-red-500 mb-4">{error}</p>}
 
-        {currentUser && (
-          <div className="mb-6">
-            <h2 className="text-xl font-semibold mb-2">Your Information</h2>
-            <table className="min-w-full  bg-white dark:bg-neutral-800 text-black dark:text-white border border-gray-300">
-              <thead>
-                <tr>
-                  <th className="border border-gray-300 px-4 py-2 text-left">
-                    Label
-                  </th>
-                  <th className="border border-gray-300 px-4 py-2 text-left">
-                    Details
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td className="border border-gray-300 px-4 py-2 font-bold">
-                    Name
-                  </td>
-                  <td className="border border-gray-300 px-4 py-2">
-                    {currentUser.full_Name}
-                  </td>
-                </tr>
-                <tr>
-                  <td className="border border-gray-300 px-4 py-2 font-bold">
-                    Email
-                  </td>
-                  <td className="border border-gray-300 px-4 py-2">
-                    {currentUser.email}
-                  </td>
-                </tr>
-                <tr>
-                  <td className="border border-gray-300 px-4 py-2 font-bold">
-                    Role
-                  </td>
-                  <td className="border border-gray-300 px-4 py-2">
-                    {currentUser.role}
-                  </td>
-                </tr>
-                <tr>
-                  <td className="border border-gray-300 px-4 py-2 font-bold">
-                    Account Created
-                  </td>
-                  <td className="border border-gray-300 px-4 py-2">
-                    {currentUser.created_at}
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+            {currentUser && (
+              <div className="mb-6">
+                <h2 className="text-xl font-semibold mb-2">Your Information</h2>
+                <table className="min-w-full  bg-white dark:bg-neutral-800 text-black dark:text-white border border-gray-300">
+                  <thead>
+                    <tr>
+                      <th className="border border-gray-300 px-4 py-2 text-left">
+                        Label
+                      </th>
+                      <th className="border border-gray-300 px-4 py-2 text-left">
+                        Details
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td className="border border-gray-300 px-4 py-2 font-bold">
+                        Name
+                      </td>
+                      <td className="border border-gray-300 px-4 py-2">
+                        {currentUser.full_Name}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td className="border border-gray-300 px-4 py-2 font-bold">
+                        Email
+                      </td>
+                      <td className="border border-gray-300 px-4 py-2">
+                        {currentUser.email}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td className="border border-gray-300 px-4 py-2 font-bold">
+                        Role
+                      </td>
+                      <td className="border border-gray-300 px-4 py-2">
+                        {currentUser.role}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td className="border border-gray-300 px-4 py-2 font-bold">
+                        Account Created
+                      </td>
+                      <td className="border border-gray-300 px-4 py-2">
+                        {currentUser.created_at}
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
 
-            <div className="mt-4 flex space-x-4">
-              <button
-                onClick={() => setIsEditing((prev) => !prev)}
-                className="bg-blue-500 text-white hover:bg-blue-600 py-2 px-4 rounded flex items-center"
-              >
-                <FaEdit className="mr-2" />
-                Edit Profile
-              </button>
-              <button
-                onClick={() => handleDelete(currentUser.id)}
-                className="bg-red-500 text-white hover:bg-red-600 py-2 px-4 rounded flex items-center"
-              >
-                <FaTrash className="mr-2" />
-                Delete Account
-              </button>
-            </div>
+                <div className="mt-4 flex space-x-4">
+                  <button
+                    onClick={() => setIsEditing((prev) => !prev)}
+                    className="bg-blue-500 text-white hover:bg-blue-600 py-2 px-4 rounded flex items-center"
+                  >
+                    <FaEdit className="mr-2" />
+                    Edit Profile
+                  </button>
+                  <button
+                    onClick={() => handleDelete(currentUser.id)}
+                    className="bg-red-500 text-white hover:bg-red-600 py-2 px-4 rounded flex items-center"
+                  >
+                    <FaTrash className="mr-2" />
+                    Delete Account
+                  </button>
+                </div>
+              </div>
+            )}
+
+            {isEditing && <EditProfile />}
           </div>
-        )}
-
-        {isEditing && <EditProfile />}
-      </div>
-    </div>
+        </div>
+      )}
     </AuthRoute>
   );
 }
