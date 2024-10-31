@@ -1,6 +1,4 @@
 
-
-// export default Notifications;
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import CreatingNewNotification from "./CreatingNewNotification";
