@@ -138,26 +138,27 @@ export default function Posts() {
   };
 
   return (
-     <div className="bg-white dark:bg-neutral-900">
-      <div className="relative flex md:mt-20">
-        {/* Button stays visible */}
+   <div className="bg-white dark:bg-neutral-900">
+      <div className="relative flex items-center mt-4 sm:mt-1">
+        {/* Notification button with increased margin for smaller devices */}
         <button
           onClick={() => setShowNotifications(!showNotifications)}
-          className="text-gray-900 dark:text-gray-200 ml-auto mr-4 mt-1"
+          className="text-gray-900 dark:text-gray-200 ml-auto mr-4 mt-10 sm:mt-1" // Increased mt-6 for better spacing
         >
           <span className="sr-only">View notifications</span>
           <BellIcon className="h-6 w-6" />
         </button>
 
-        {/* Display notifications as a modal or dropdown */}
+        {/* Notification dropdown/modal positioned directly under the notification icon */}
         {showNotifications && (
-          <div className="mt-11 absolute z-50 dark:bg-black border-white border right-10 mt-2 w-64 bg-white shadow-lg rounded-md">
+          <div className="mr-7 absolute z-50 dark:bg-black border-white border top-full mt-2 right-0 w-64 bg-white shadow-lg rounded-md">
             <Notif />
           </div>
         )}
       </div>
-      <div className="ml-10 lg:-mt-20 md:-mt-30 sm:ml-0 sm:mt-0">
-        {/* Conditionally render buttons based on user role */}
+
+      {/* User Role Buttons */}
+      <div className="ml-10 mt-2 sm:ml-0 sm:mt-4">
         {role === "manager" ? (
           <>
             <button
@@ -200,6 +201,7 @@ export default function Posts() {
         )}
       </div>
 
+      {/* Content Section */}
       <div className="w-12/12 mx-auto py-8 text-black bg-white dark:bg-neutral-900 dark:text-white">
         <FilterButtons
           filter={filter}
@@ -231,11 +233,9 @@ export default function Posts() {
                   </div>
                 ) : (
                   <p className="text-center text-lg">
-                    Keep waiting still the posts are fetching or maybe here is
-                    not any post availabe!
+                    Keep waiting; the posts are fetching or no posts available!
                   </p>
                 )}
-                {/* Changed this line to only render nothing when there are no posts */}
               </div>
             )}
           </div>
