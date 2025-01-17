@@ -77,7 +77,7 @@ const Footer = () => {
         <br />
         <br />
         <div className="text-sm font-bold text-center mb-4">
-          © 2024 Your Company. All rights reserved.
+          © 2025 Suriya Haidari. All rights reserved.
         </div>
       </div>
     </footer>
