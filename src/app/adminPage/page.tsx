@@ -13,7 +13,7 @@ import { useRouter } from "next/navigation";
 
 const navigation = [
   { name: "Dashboard", href: "/", current: true },
-  { name: "New Post ", href: "/new-post", current: false },
+  { name: "New Post ", href: "/medical-frontend/new-post", current: false },
 ];
 
 function classNames(...classes) {
